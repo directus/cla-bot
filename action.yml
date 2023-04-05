@@ -1,0 +1,14 @@
+name: 'CLA Bot'
+description: 'Check if a contributor has signed the CLA'
+inputs:
+  github-token:
+    description: GitHub Token
+    required: true
+    default: ${{ github.token }}
+  contributors-file:
+    description: Contributors File
+    required: true
+    default: contributors.yml
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

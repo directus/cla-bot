@@ -9590,7 +9590,9 @@ const missingAuthors = commits.data.filter((commit) => !commit.author?.login);
 if (missingAuthors.length > 0) {
     throw new Error(`PR contains commits without associated GitHub users`);
 }
-const authors = Array.from(new Set(commits.data.map((commit) => commit.author.login))).sort();
+const authors = Array.from(new Set(commits.data
+    .filter((commit) => commit.author.type.toLowerCase() !== "bot")
+    .map((commit) => commit.author.login))).sort();
 const fileContentResponse = await octokit.rest.repos.getContent({
     owner: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.pull_request.head.repo.owner.login,
     repo: _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.pull_request.head.repo.name,

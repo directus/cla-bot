@@ -25,7 +25,11 @@ if (missingAuthors.length > 0) {
 }
 
 const authors = Array.from(
-	new Set(commits.data.map((commit) => commit.author!.login))
+	new Set(
+		commits.data
+			.filter((commit) => commit.author!.type.toLowerCase() !== "bot")
+			.map((commit) => commit.author!.login)
+	)
 ).sort();
 
 const fileContentResponse = await octokit.rest.repos.getContent({
